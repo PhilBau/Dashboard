@@ -78,7 +78,7 @@ class Dashboard_Helper_WidgetHelper
                 continue; // error
             }
 
-            $event = new Zikula_Event(new Zikula_Event(Dashboard_Events::FILTER_WIDGET_CLASS, null, array(), $dbWidget->getClass()));
+            $event = new Zikula_Event(Dashboard_Events::FILTER_WIDGET_CLASS, null, array(), $dbWidget->getClass());
             $class = EventUtil::notify($event)->getData();
             if (!class_exists($class)) {
                 continue;
