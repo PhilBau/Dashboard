@@ -8,7 +8,10 @@ sense.  Zikula module developers can start to provide widgets for the Dashboard
 along with their modules much like they provide blocks, searches, mailz and
 other features.  The widgets are placed at 
 
-`/modules/{modname}/lib/{modname}/Widget/{widgetname}.php` or 
+`/modules/{modname}/lib/{modname}/Widget/{widgetname}.php` 
+
+or 
+
 `/system/{modname}/lib/{modname}/Widget/{widgetname}.php`
 
 Module developers should also provide Widget registration functions into their
@@ -44,7 +47,8 @@ at `modules/{modname}/lib/{modname}/Widget/{widgetname}.php` that will register
 the module in Zikula.
 
 The samples are:
-Users: Users registered over the last 30 days
-EZComments: Comments made over the last 30 days
-Content: Top 25 Content Pages viewed
+
+  - Users: Users registered over the last 30 days
+  - EZComments: Comments made over the last 30 days
+  - Content: Top 25 Content Pages viewed
 
