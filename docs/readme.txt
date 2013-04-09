@@ -6,8 +6,8 @@ information.  This may be text or javascript graphs or anything else that makes
 sense.  Zikula module developers can start to provide widgets for the Dashboard
 along with their modules much like they provide blocks, searches, mailz and
 other features.  The widgets are placed at 
-/modules/{modname}/lib/{modname}/Widgets/{widgetname}.php or 
-/system/{modname}/lib/{modname}/Widgets/{widgetname}.php
+/modules/{modname}/lib/{modname}/Widget/{widgetname}.php or 
+/system/{modname}/lib/{modname}/Widget/{widgetname}.php
 Module developers should also provide Widget registration functions into their
 modules so that the Dashboard can recognize that they are there.
 
@@ -34,7 +34,7 @@ useful widgets along with their modules.
 
 Until they do, however, each widget will have to be registered manually in
 your Zikula installation.  I have placed some SQL in the header of each widget
-at /modules/{modname}/lib/{modname}/Widgets/{widgetname}.php that will register
+at /modules/{modname}/lib/{modname}/Widget/{widgetname}.php that will register
 the module in Zikula.
 
 The samples are:
