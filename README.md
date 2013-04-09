@@ -18,7 +18,7 @@ Developer Example
 Widgets simply provide content to be displayed in the widget dashboard. They can return
 any kind of HTML content. Widgets must be classes which implement the `Dashboard_AbstractWidget`
 and follows the usual autoloading standards in Zikula `<Modname>_Widget_<Widgetname>` and
-stored in the corresponding `Widget` folder.
+stored in the corresponding `Widget/` folder.
 
 Widgets are stored in 3rd party modules, not in the Dashboard module.
 
