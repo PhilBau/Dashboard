@@ -22,7 +22,7 @@ class Dashboard_Controller_Ajax extends Zikula_Controller_AbstractAjax
 
         foreach ($widgets as $position => $id) {
             $item = $this->entityManager->getRepository('Dashboard_Entity_UserWidget')->findOneBy(array('id' => $id));
-	    $item->setPosition($position);
+            $item->setPosition($position);
         }
 
         $this->entityManager->flush();

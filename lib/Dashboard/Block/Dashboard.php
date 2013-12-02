@@ -51,7 +51,7 @@ class Dashboard_Block_Dashboard extends Zikula_Controller_AbstractBlock
             return;
         }
 
-	// Break out options from our content field
+        // Break out options from our content field
         $vars = BlockUtil::varsFromContent($blockInfo['content']);
 
         if ($this->view->getCaching()) {

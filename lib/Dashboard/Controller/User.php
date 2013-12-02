@@ -19,7 +19,7 @@ class Dashboard_Controller_User extends Zikula_AbstractController
 
         $this->view->assign('widgets', $widgets);
         $checkbox = (int) $this->request->getSession()->get('dashboard/available_widget_checkbox', false);
-	$this->view->assign('available_checkbox', $checkbox);
+        $this->view->assign('available_checkbox', $checkbox);
 
         return $this->view->fetch('User/view.html.tpl');
     }
@@ -80,9 +80,9 @@ class Dashboard_Controller_User extends Zikula_AbstractController
         }
 
         $id = $this->request->request->get('id', null);
-	if (null === $id) {
+        if (null === $id) {
             throw new Exception($this->__('id not specified'));
-	}
+        }
 
         Dashboard_Util::removeUserWidget($id);
 
@@ -91,54 +91,54 @@ class Dashboard_Controller_User extends Zikula_AbstractController
 
     public function updateParameters()
     {
-	$this->checkCsrfToken();
+        $this->checkCsrfToken();
 
         if (!SecurityUtil::checkPermission('Dashboard::', '::', ACCESS_READ)) {
             return LogUtil::registerPermissionError();
         }
 
-	$id = $this->request->request->get('id', null);
+        $id = $this->request->request->get('id', null);
         if (null === $id) {
-	    throw new Exception($this->__('id not specified'));
-	}
+            throw new Exception($this->__('id not specified'));
+        }
 
-	$index = 1;
-	$serialized = '{';
+        $index = 1;
+        $serialized = '{';
 
-	// Serialize the widget parameters
-	while(true) {
-	    $paramName = $this->request->request->get('param'.'name'.$index, null);
-	    if (null === $paramName) {
-		break;
-	    }
+        // Serialize the widget parameters
+        while(true) {
+            $paramName = $this->request->request->get('param'.'name'.$index, null);
+            if (null === $paramName) {
+                break;
+            }
 
-	    // Get the parameters
+            // Get the parameters
 	    $param = $this->request->getPost()->get('param'.$index, null);
-	    if (null === $param) {
+            if (null === $param) {
 	        throw new Exception($this->__('param not specified'));
-	    }
+            }
 
 	    // the parameters can also be an array
-	    if (is_array($param)) {
-		$param =  implode("|",$param);
-	    }  
+            if (is_array($param)) {
+                $param =  implode("|",$param);
+            } 
 
-	    if ($index != 1) {
-	        $serialized .= ', "';	
-	    } else {
-	        $serialized .= '"';
-	    }
+            if ($index != 1) {
+                $serialized .= ', "';	
+            } else {
+                $serialized .= '"';
+            }
 	    
-	    $serialized .= $paramName.'":"'.$param.'"';
+            $serialized .= $paramName.'":"'.$param.'"';
 
-	    ++$index;
-	}
+            ++$index;
+        }
 
-	$serialized .= '}';
+        $serialized .= '}';
 
-	$uid = $this->request->getSession()->get('uid');
-	Dashboard_Util::updateUserParameters($id, $serialized);
+        $uid = $this->request->getSession()->get('uid');
+        Dashboard_Util::updateUserParameters($id, $serialized);
 
-	return $this->redirect(ModUtil::url('Dashboard', 'user', 'view'));
+        return $this->redirect(ModUtil::url('Dashboard', 'user', 'view'));
     }
 }

@@ -26,8 +26,8 @@ class Dashboard_Version extends Zikula_AbstractVersion
         $version['description'] = $this->__('Dashboard for Zikula');
         $version['version'] = '0.9.1';
         $version['contact'] = 'drak@zikula.org';
-	$version['securityschema'] = array('Dashboard::' => '::',
-					   'Dashboard::defWidget' => 'User Widget ID::');
+        $version['securityschema'] = array('Dashboard::' => '::',
+                                           'Dashboard::defWidget' => 'User Widget ID::');
 
         return $version;
     }

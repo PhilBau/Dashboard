@@ -13,21 +13,21 @@
             {foreach item='userWidget' from=$userWidgets}
                 {assign var="position" value=$userWidget.position}
                 {assign var="id" value=$userWidget.userWidgetId}
-	        <!-- Present only the default widgets -->
-	        {if $userWidget->getDefWidget() eq 1}
-		    <!-- The user is admin and can sort the default widgets -->
-		    {if $isAdmin}
+                <!-- Present only the default widgets -->
+                {if $userWidget->getDefWidget() eq 1}
+                    <!-- The user is admin and can sort the default widgets -->
+                    {if $isAdmin}
                     <div id="widget_{$id}" class="z-dashboardwidgetcontainer draggable" style="width:{math equation='100/x' x=$modvars.Dashboard.widgets_per_row format='%.0d'}%;">
                         {img modname='Dashboard' src='mouse.png' __alt='Drag to sort' __title='Drag to sort' id="dragicon`$id`" class='z-dragicon'}
-			{if $userWidget->getUrl()}
+                        {if $userWidget->getUrl()}
                             <h3>{$userWidget->getTitle()}</h3>
                             <a href="{$userWidget->getUrl()}"></a><br/>
                         {elseif $userWidget->getContent() neq null}
                             <h3>{$userWidget->getTitle()}</h3>
-			    {$userWidget->getContent()}
+                            {$userWidget->getContent()}
                         {/if}
-		    </div>
-		    {elseif $isModerator}
+                    </div>
+                    {elseif $isModerator}
                     <div id="widget_{$id}" class="z-dashboardwidgetcontainer" style="width:{math equation='100/x' x=$modvars.Dashboard.widgets_per_row format='%.0d'}%;">
                         {if $userWidget->getUrl()}
                             <h3>{$userWidget->getTitle()}</h3>
@@ -37,8 +37,8 @@
                             {$userWidget->getContent()}
                         {/if}
                     </div>
-		    {else}
-		    <div id="widget_{$id}" class="z-dashboardwidgetcontainer" style="width:{math equation='100/x' x=$modvars.Dashboard.widgets_per_row format='%.0d'}%;">
+                    {else}
+                    <div id="widget_{$id}" class="z-dashboardwidgetcontainer" style="width:{math equation='100/x' x=$modvars.Dashboard.widgets_per_row format='%.0d'}%;">
                         {if $userWidget->getUrl()}
                             <a href="{$userWidget->getUrl()}"></a>
                             <h3>{$userWidget->getTitle()}</h3>
@@ -47,8 +47,8 @@
                             {$userWidget->getContent()}
                         {/if}
                     </div>
-		    {/if}
-	        {/if}
+                    {/if}
+                {/if}
             {/foreach}
         </div>
     </td>
@@ -68,7 +68,7 @@
                         <a href="{$userWidget->getUrl()}"></a><br/>
                     {elseif $userWidget->getContent() neq null}
                         <h3>{$userWidget->getTitle()}</h3>
-			{$userWidget->getContent()}
+                        {$userWidget->getContent()}
                     {/if}
                 </div>
             {/if}
