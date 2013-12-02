@@ -211,12 +211,12 @@ class Dashboard_Entity_UserWidget
      *
      * @return Dashboard_Entity_UserWidget
      */
-     public function setDefWidget($def_widget)
-     {
-	$this->def_widget = $def_widget;
+    public function setDefWidget($def_widget)
+    {
+        $this->def_widget = $def_widget;
 
-	return $this;
-     }
+        return $this;
+    }
 
      /**
       *

@@ -182,22 +182,22 @@ class Dashboard_Entity_Widget
      *
      * @return Dashboard_Entity_Widget
      */
-     public function setDefWidget($def_widget)
-     {
-	$this->def_widget = $def_widget;
+    public function setDefWidget($def_widget)
+    {
+        $this->def_widget = $def_widget;
 
         return $this;
-     }
+    }
 
-     /**
-      *
-      * Get def_widget
-      *
-      * @return integer
-      */
-     public function getDefWidget()
-     {
-	return $this->def_widget;
-     }
+    /**
+     *
+     * Get def_widget
+     *
+     * @return integer
+     */
+    public function getDefWidget()
+    {
+        return $this->def_widget;
+    }
 
 }
