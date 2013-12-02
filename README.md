@@ -71,7 +71,7 @@ An example is shown below:
             return $this->userWidgetId;
         }
 
-	public function getParameters()
+        public function getParameters()
         {
             return $this->parameters;
         }

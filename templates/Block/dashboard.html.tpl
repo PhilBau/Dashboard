@@ -63,7 +63,7 @@
             {if $userWidget->getDefWidget() eq 0}
                 <div id="widget_{$id}" class="z-dashboardwidgetcontainer draggable" style="width:{math equation='100/x' x=$modvars.Dashboard.widgets_per_row format='%.0d'}%;">
                     {img modname='Dashboard' src='mouse.png' __alt='Drag to sort' __title='Drag to sort' id="dragicon`$id`" class='z-dragicon'}
-		    {if $userWidget->getUrl()}
+                    {if $userWidget->getUrl()}
                         <h3>{$userWidget->getTitle()}</h3>
                         <a href="{$userWidget->getUrl()}"></a><br/>
                     {elseif $userWidget->getContent() neq null}

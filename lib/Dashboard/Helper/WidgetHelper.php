@@ -50,14 +50,14 @@ class Dashboard_Helper_WidgetHelper
 
             /* @var Dashboard_AbstractWidget $widget */
             $widget = new $class();
-	    if (!SecurityUtil::checkPermission('Dashboard::', "{$userWidget->getWidgetId()}:{$widget->getModule()}:$uid", ACCESS_OVERVIEW) || 
-	       !SecurityUtil::checkPermission('Dashboard::defWidget', "{$userWidget->getId()}::", ACCESS_OVERVIEW)) {
+            if (!SecurityUtil::checkPermission('Dashboard::', "{$userWidget->getWidgetId()}:{$widget->getModule()}:$uid", ACCESS_OVERVIEW) || 
+                !SecurityUtil::checkPermission('Dashboard::defWidget', "{$userWidget->getId()}::", ACCESS_OVERVIEW)) {
                 continue; // error
             }
             $widget->setPosition($userWidget->getPosition());
             $widget->setUserWidgetId($userWidget->getId());
-	    $widget->setParameters($userWidget->getParameters());
-	    $widget->setDefWidget($userWidget->getDefWidget());
+            $widget->setParameters($userWidget->getParameters());
+            $widget->setDefWidget($userWidget->getDefWidget());
             $widgets[] = $widget;
         }
 

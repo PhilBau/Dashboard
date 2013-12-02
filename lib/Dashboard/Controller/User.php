@@ -35,7 +35,7 @@ class Dashboard_Controller_User extends Zikula_AbstractController
         $widgetId = $this->request->request->get('id', null);
         if (null === $widgetId) {
             throw new Exception($this->__(sprintf('%s not found', $widgetId)));
-	}
+        }
 
         $widget = $this->entityManager->getRepository('Dashboard_Entity_Widget')
             ->findOneBy(array('id' => $widgetId));
@@ -53,20 +53,20 @@ class Dashboard_Controller_User extends Zikula_AbstractController
 
         $uid = $this->request->getSession()->get('uid');
 
-	// If this widget is a default one and the user is admin, add it to all users
-	if (isset($_POST['set_default_widget'])) {
-	    $defWidget = $this->request->getPost()->get('set_default_widget', null);
-	    if (null === $defWidget) {
-		throw new Exception($this->__(sprintf('%s not found', $defWidget)));
-	    }
+        // if this widget is a default one and the user is admin, add it to all users
+        if (isset($_POST['set_default_widget'])) {
+            $defWidget = $this->request->getPost()->get('set_default_widget', null);
+            if (null === $defWidget) {
+                throw new Exception($this->__(sprintf('%s not found', $defWidget)));
+            }
 
-	    $widget->setDefWidget(1);
-	    Dashboard_Util::addUserWidget($uid, $widget, 1);
-	}
-	// add it only to the current user
-	else {
-	    Dashboard_Util::addUserWidget($uid, $widget, 0);
-	}
+            $widget->setDefWidget(1);
+            Dashboard_Util::addUserWidget($uid, $widget, 1);
+        }
+        // add it only to the current user
+        else {
+            Dashboard_Util::addUserWidget($uid, $widget, 0);
+        }
 
         return $this->redirect(ModUtil::url('Dashboard', 'user', 'view'));
     }
@@ -113,12 +113,12 @@ class Dashboard_Controller_User extends Zikula_AbstractController
             }
 
             // Get the parameters
-	    $param = $this->request->getPost()->get('param'.$index, null);
+            $param = $this->request->getPost()->get('param'.$index, null);
             if (null === $param) {
-	        throw new Exception($this->__('param not specified'));
+                throw new Exception($this->__('param not specified'));
             }
 
-	    // the parameters can also be an array
+            // the parameters can also be an array
             if (is_array($param)) {
                 $param =  implode("|",$param);
             } 
@@ -130,7 +130,6 @@ class Dashboard_Controller_User extends Zikula_AbstractController
             }
 	    
             $serialized .= $paramName.'":"'.$param.'"';
-
             ++$index;
         }
 

@@ -51,8 +51,8 @@
             {foreach item='userWidget' from=$userWidgets}
             {assign var="position" value=$userWidget.position}
             {assign var="id" value=$userWidget.userWidgetId}
-	    <!-- Present only the default widgets -->		
-	    {if $userWidget->getDefWidget() eq 1}
+            <!-- Present only the default widgets -->		
+            {if $userWidget->getDefWidget() eq 1}
             {if $isAdmin}
             <div id="widget_{$id}" class="z-dashboardwidgetcontainer draggable" style="width:{math equation='100/x' x=$modvars.Dashboard.widgets_per_row format='%.0d'}%;">
                 {img modname='Dashboard' src='mouse.png' __alt='Drag to sort' __title='Drag to sort' id="dragicon`$id`" class='z-dragicon'}

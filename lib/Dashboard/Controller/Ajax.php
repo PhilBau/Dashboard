@@ -32,19 +32,19 @@ class Dashboard_Controller_Ajax extends Zikula_Controller_AbstractAjax
 
     public function sortDefWidgets()
     {
-         $this->checkAjaxToken();
-         $this->throwForbiddenUnless(SecurityUtil::checkPermission('Dashboard::', '::', ACCESS_ADMIN));
+        $this->checkAjaxToken();
+        $this->throwForbiddenUnless(SecurityUtil::checkPermission('Dashboard::', '::', ACCESS_ADMIN));
 
-         $widgets = $this->request->request->get('widgetsdef');
-	 
-	 foreach ($widgets as $position => $id) {
+        $widgets = $this->request->request->get('widgetsdef');
+ 
+        foreach ($widgets as $position => $id) {
             $item = $this->entityManager->getRepository('Dashboard_Entity_UserWidget')->findOneBy(array('id' => $id));
             $item->setPosition($position);
-         }
+        }
 
-         $this->entityManager->flush();
+        $this->entityManager->flush();
 
-         return new Zikula_Response_Ajax(array());
+        return new Zikula_Response_Ajax(array());
     }
 
 
@@ -61,15 +61,16 @@ class Dashboard_Controller_Ajax extends Zikula_Controller_AbstractAjax
 
     public function updateParameters()
     {
-	$this->checkAjaxToken();
-	$this->throwForbiddenUnless(SecurityUtil::checkPermission('Dashboard::', '::', ACCESS_READ));
+        $this->checkAjaxToken();
+        $this->throwForbiddenUnless(SecurityUtil::checkPermission('Dashboard::', '::', ACCESS_READ));
 
-	$widgets = $this->request->request->get('widgets');
-		    
-	foreach ($widgets as $position => $id) {
-		$item = $this->entityManager->getRepository('Dashboard_Entity_UserWidget')->findOneBy(array('id' => $id));
-	}
+        $widgets = $this->request->request->get('widgets');
+    
+        foreach ($widgets as $position => $id) {
+            $item = $this->entityManager->getRepository('Dashboard_Entity_UserWidget')->findOneBy(array('id' => $id));
+        }
 
-	return;
+        return;
     }
+
 }
