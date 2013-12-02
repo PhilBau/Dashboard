@@ -37,7 +37,7 @@ class Dashboard_Helper_WidgetHelper
      */
     public function getUserWidgets($uid)
     {
-        $userWidgets = $this->em->createQuery("SELECT u FROM Dashboard_Entity_UserWidget u WHERE u.uid = $uid ORDER BY u.position")
+        $userWidgets = $this->em->createQuery("SELECT u FROM Dashboard_Entity_UserWidget u WHERE u.uid = $uid OR u.def_widget = 1 ORDER BY u.def_widget DESC, u.position ASC")
             ->execute();
 
         $widgets = array();
@@ -50,11 +50,14 @@ class Dashboard_Helper_WidgetHelper
 
             /* @var Dashboard_AbstractWidget $widget */
             $widget = new $class();
-            if (!SecurityUtil::checkPermission('Dashboard::', "{$userWidget->getWidgetId()}:{$widget->getModule()}:$uid", ACCESS_READ)) {
+            if (!SecurityUtil::checkPermission('Dashboard::', "{$userWidget->getWidgetId()}:{$widget->getModule()}:$uid", ACCESS_OVERVIEW) || 
+                !SecurityUtil::checkPermission('Dashboard::defWidget', "{$userWidget->getId()}::", ACCESS_OVERVIEW)) {
                 continue; // error
             }
             $widget->setPosition($userWidget->getPosition());
             $widget->setUserWidgetId($userWidget->getId());
+            $widget->setParameters($userWidget->getParameters());
+            $widget->setDefWidget($userWidget->getDefWidget());
             $widgets[] = $widget;
         }
 

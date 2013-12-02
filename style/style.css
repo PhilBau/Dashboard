@@ -8,6 +8,10 @@ div.z-dashboardlink img {
     border: none;
 }
 
+table.z-dashboardwidgettable {width: 100%;}
+
 #z-dashboardwidgetlist .z-dragicon {
     cursor: move;
 }
+#widgetsdef h3 {color:red;}
+#widgets h3 {color:green;}

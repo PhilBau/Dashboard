@@ -83,7 +83,7 @@ class Dashboard_Util
      *
      * @return mixed
      */
-    public static function addUserWidget($uid, $widget, $position = 0)
+    public static function addUserWidget($uid, $widget, $isDefWidget, $position = 0)
     {
         /* @var EntityManager $em */
         $em = ServiceUtil::getService('doctrine.entitymanager');
@@ -94,15 +94,21 @@ class Dashboard_Util
                                                                                'module' => $widget->getModule(),
                                                                            ));
 
-        if (!SecurityUtil::checkPermission('Dashboard::', "{$widget->getId()}:{$widget->getModule()}:$uid", ACCESS_EDIT)) {
+        $widget->getModule();
+
+        // Consider 2 cases if the widget is a default one or not
+        if (!SecurityUtil::checkPermission('Dashboard::', "{$widget->getId()}:{$widget->getModule()}:$uid", ACCESS_READ) && !$isDefWidget ||
+            !SecurityUtil::checkPermission('Dashboard::', "{$widget->getId()}:{$widget->getModule()}:$uid", ACCESS_ADMIN) && $isDefWidget) {
             return; // error
         }
+	
         $userWidget = new Dashboard_Entity_UserWidget();
         $userWidget->setUid($uid);
         $userWidget->setWidgetId($widget->getId());
         $userWidget->setPosition($position);
         $userWidget->setClass($widget->getClass());
-
+        $userWidget->setParameters($widget->getParameters());
+        $userWidget->setDefWidget($isDefWidget);
         $em->persist($userWidget);
         $em->flush();
     }
@@ -112,6 +118,8 @@ class Dashboard_Util
      */
     public static function removeUserWidget($id)
     {
+        $isDefWidget='false';
+
         /* @var EntityManager $em */
         $em = ServiceUtil::getService('doctrine.entitymanager');
 
@@ -119,7 +127,12 @@ class Dashboard_Util
         $userWidget = $em->getRepository('Dashboard_Entity_UserWidget')->findOneBy(array(
                                                                                'id' => $id,
                                                                            ));
-
+        $isDefWidget = $userWidget->getDefWidget();
+        // Consider 2 cases if the widget is a default one or not
+        if (!SecurityUtil::checkPermission('Dashboard::', "{$userWidget->getId()}::$uid", ACCESS_READ) && !$isDefWidget ||
+            !SecurityUtil::checkPermission('Dashboard::', "{$userWidget->getId()}::$uid", ACCESS_ADMIN) && $isDefWidget) {
+                return; // error
+        }
         $em->remove($userWidget);
         $em->flush();
     }
@@ -141,6 +154,28 @@ class Dashboard_Util
             $em->remove($widget);
         }
 
+        $em->flush();
+    }
+   
+    /**
+     * @param integer                  $uid
+     * @param Dashboard_AbstractWidget $widget
+     * @param integer                  $position
+     *
+     * @return mixed
+     */
+    public static function updateUserParameters($id, $params)
+    {
+        /* @var EntityManager $em */
+        $em = ServiceUtil::getService('doctrine.entitymanager');
+
+	
+        $userWidget = $em->getRepository('Dashboard_Entity_UserWidget')->findOneBy(array(
+                                                                                'id' => $id,
+                                                                                ));
+	
+        $userWidget->setParameters($params);
+        $em->persist($userWidget);
         $em->flush();
     }
 }

@@ -32,6 +32,17 @@ abstract class Dashboard_AbstractWidget implements Zikula_TranslatableInterface,
      * @var integer
      */
     protected $id;
+	
+    /**
+     * @var string
+     */
+    protected $parameters;
+
+    /**
+     * @var integer 
+     */
+    protected $default;
+
 
     /**
      * Gets Content
@@ -39,6 +50,13 @@ abstract class Dashboard_AbstractWidget implements Zikula_TranslatableInterface,
      * @return string
      */
     abstract public function getContent();
+
+    /**
+     * Gets Conf Content
+     *
+     * @return string
+     */
+     abstract public function getConfContent();
 
     /**
      * Gets Module
@@ -148,6 +166,56 @@ abstract class Dashboard_AbstractWidget implements Zikula_TranslatableInterface,
         return $this->domain;
     }
 
+    /**
+     * Sets Parameters
+     *
+     * @param string $parameters
+     *
+     * @return Dashboard_AbstractWidget
+     */
+    public function setParameters($parameters)
+    {
+        $this->parameters = $parameters;
+
+        return $this;
+    }
+
+    /**
+     * Gets Parameters
+     *
+     * @return string
+     */
+    public function getParameters()
+    {
+        return $this->parameters;
+    }
+
+
+    /**
+     * Sets Default
+     *
+     * @param nteger $default
+     *
+     * @return Dashboard_AbstractWidget
+     */
+    public function setDefWidget($default)
+    {
+        $this->default = $default;
+
+        return $this;
+    }
+
+   /**
+    * Gets Default 
+    *
+    * @return integer
+    */
+    public function getDefWidget()
+    {
+        return $this->default;
+    }
+
+	
     /**
      * Translate.
      *

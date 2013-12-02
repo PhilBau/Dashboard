@@ -50,6 +50,15 @@ class Dashboard_Installer extends Zikula_AbstractInstaller
      */
     public function upgrade($oldversion)
     {
+        try {
+            DoctrineHelper::updateSchema($this->entityManager,  array(
+                'Dashboard_Entity_UserWidget',
+                'Dashboard_Entity_Widget',
+            ));
+        } catch (Exception $e) {
+           return LogUtil::registerError($e->getMessage());
+        }
+
         return true;
     }
 

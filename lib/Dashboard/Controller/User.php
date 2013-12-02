@@ -52,7 +52,21 @@ class Dashboard_Controller_User extends Zikula_AbstractController
         }
 
         $uid = $this->request->getSession()->get('uid');
-        Dashboard_Util::addUserWidget($uid, $widget);
+
+        // if this widget is a default one and the user is admin, add it to all users
+        if (isset($_POST['set_default_widget'])) {
+            $defWidget = $this->request->getPost()->get('set_default_widget', null);
+            if (null === $defWidget) {
+                throw new Exception($this->__(sprintf('%s not found', $defWidget)));
+            }
+
+            $widget->setDefWidget(1);
+            Dashboard_Util::addUserWidget($uid, $widget, 1);
+        }
+        // add it only to the current user
+        else {
+            Dashboard_Util::addUserWidget($uid, $widget, 0);
+        }
 
         return $this->redirect(ModUtil::url('Dashboard', 'user', 'view'));
     }
@@ -71,6 +85,58 @@ class Dashboard_Controller_User extends Zikula_AbstractController
         }
 
         Dashboard_Util::removeUserWidget($id);
+
+        return $this->redirect(ModUtil::url('Dashboard', 'user', 'view'));
+    }
+
+    public function updateParameters()
+    {
+        $this->checkCsrfToken();
+
+        if (!SecurityUtil::checkPermission('Dashboard::', '::', ACCESS_READ)) {
+            return LogUtil::registerPermissionError();
+        }
+
+        $id = $this->request->request->get('id', null);
+        if (null === $id) {
+            throw new Exception($this->__('id not specified'));
+        }
+
+        $index = 1;
+        $serialized = '{';
+
+        // Serialize the widget parameters
+        while(true) {
+            $paramName = $this->request->request->get('param'.'name'.$index, null);
+            if (null === $paramName) {
+                break;
+            }
+
+            // Get the parameters
+            $param = $this->request->getPost()->get('param'.$index, null);
+            if (null === $param) {
+                throw new Exception($this->__('param not specified'));
+            }
+
+            // the parameters can also be an array
+            if (is_array($param)) {
+                $param =  implode("|",$param);
+            } 
+
+            if ($index != 1) {
+                $serialized .= ', "';	
+            } else {
+                $serialized .= '"';
+            }
+	    
+            $serialized .= $paramName.'":"'.$param.'"';
+            ++$index;
+        }
+
+        $serialized .= '}';
+
+        $uid = $this->request->getSession()->get('uid');
+        Dashboard_Util::updateUserParameters($id, $serialized);
 
         return $this->redirect(ModUtil::url('Dashboard', 'user', 'view'));
     }
