@@ -16,13 +16,13 @@ class Dashboard_Controller_Ajax extends Zikula_Controller_AbstractAjax
     public function sortWidgets()
     {
         $this->checkAjaxToken();
-        $this->throwForbiddenUnless(SecurityUtil::checkPermission('Dashboard::', '::', ACCESS_EDIT));
+        $this->throwForbiddenUnless(SecurityUtil::checkPermission('Dashboard::', '::', ACCESS_READ));
 
         $widgets = $this->request->request->get('widgets');
 
         foreach ($widgets as $position => $id) {
             $item = $this->entityManager->getRepository('Dashboard_Entity_UserWidget')->findOneBy(array('id' => $id));
-            $item->setPosition($position);
+	    $item->setPosition($position);
         }
 
         $this->entityManager->flush();
@@ -30,14 +30,46 @@ class Dashboard_Controller_Ajax extends Zikula_Controller_AbstractAjax
         return new Zikula_Response_Ajax(array());
     }
 
+    public function sortDefWidgets()
+    {
+         $this->checkAjaxToken();
+         $this->throwForbiddenUnless(SecurityUtil::checkPermission('Dashboard::', '::', ACCESS_ADMIN));
+
+         $widgets = $this->request->request->get('widgetsdef');
+	 
+	 foreach ($widgets as $position => $id) {
+            $item = $this->entityManager->getRepository('Dashboard_Entity_UserWidget')->findOneBy(array('id' => $id));
+            $item->setPosition($position);
+         }
+
+         $this->entityManager->flush();
+
+         return new Zikula_Response_Ajax(array());
+    }
+
+
     public function setAddState()
     {
         $this->checkAjaxToken();
-        $this->throwForbiddenUnless(SecurityUtil::checkPermission('Dashboard::', '::', ACCESS_EDIT));
+        $this->throwForbiddenUnless(SecurityUtil::checkPermission('Dashboard::', '::', ACCESS_READ));
 
         $state = $this->request->request->get('state');
         $this->request->getSession()->set('dashboard/available_widget_checkbox', $state);
 
         return new Zikula_Response_Ajax(array());
+    }
+
+    public function updateParameters()
+    {
+	$this->checkAjaxToken();
+	$this->throwForbiddenUnless(SecurityUtil::checkPermission('Dashboard::', '::', ACCESS_READ));
+
+	$widgets = $this->request->request->get('widgets');
+		    
+	foreach ($widgets as $position => $id) {
+		$item = $this->entityManager->getRepository('Dashboard_Entity_UserWidget')->findOneBy(array('id' => $id));
+	}
+
+	return;
     }
 }

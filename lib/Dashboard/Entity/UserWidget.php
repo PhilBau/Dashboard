@@ -59,6 +59,20 @@ class Dashboard_Entity_UserWidget
     private $class;
 
     /**
+     * @var string $parameters
+     *
+     * @ORM\Column(name="parameters", type="string", length=500)
+     */
+    private $parameters;
+
+    /**
+     * @var integer $def_widget
+     *
+     * @ORM\Column(name="def_widget", type="integer")
+     */
+    private $def_widget = 0;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -164,4 +178,55 @@ class Dashboard_Entity_UserWidget
     {
         return $this->class;
     }
+	
+    /**
+     * Set class
+     *
+     * @param string $parameters
+     *
+     * @return Dashboard_Entity_UserWidget
+     */
+    public function setParameters($parameters)
+    {
+        $this->parameters = $parameters;
+
+        return $this;
+    }
+
+    /**
+     *
+     * Get parameters
+     *
+     * @return string
+     */
+    public function getParameters()
+    {			
+        return $this->parameters;
+    }
+
+    /**
+     * Set def_widget
+     *
+     * @param integer $def_widget
+     *
+     * @return Dashboard_Entity_UserWidget
+     */
+     public function setDefWidget($def_widget)
+     {
+	$this->def_widget = $def_widget;
+
+	return $this;
+     }
+
+     /**
+      *
+      * Get def_widget
+      *
+      * @return integer
+      */
+     public function getDefWidget()
+     {
+        return $this->def_widget;
+     }
+
 }

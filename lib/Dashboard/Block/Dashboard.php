@@ -47,11 +47,11 @@ class Dashboard_Block_Dashboard extends Zikula_Controller_AbstractBlock
      */
     public function display($blockInfo)
     {
-        if (!SecurityUtil::checkPermission('Dashboard::', "::", ACCESS_READ)) {
+        if (!SecurityUtil::checkPermission('Dashboard::', "::", ACCESS_OVERVIEW)) {
             return;
         }
 
-        // Break out options from our content field
+	// Break out options from our content field
         $vars = BlockUtil::varsFromContent($blockInfo['content']);
 
         if ($this->view->getCaching()) {

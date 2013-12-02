@@ -18,7 +18,7 @@ Developer Example
 Widgets simply provide content to be displayed in the widget dashboard. They can return
 any kind of HTML content. Widgets must be classes which implement the `Dashboard_AbstractWidget`
 and follows the usual autoloading standards in Zikula `<Modname>_Widget_<Widgetname>` and
-stored in the corresponding `Widget/` folder.
+stored in the corresponding `Widget` folder.
 
 Widgets are stored in 3rd party modules, not in the Dashboard module.
 
@@ -31,6 +31,9 @@ Each method is explained:
     This could typically return some function call, `ModUtil::apiFunc()` call.
   - `getUrl()` sets the URL the widget should link to, if any.
   - `getIcon()` sets the name of any display icon (for widget add view).
+  - `getUserWidgetId()` sets the id of each user widget
+  - `getParameters()` sets widget parameters called during widget display. 
+  - `getDefWidget()` get if a widget is a default one or not (return boolean).
 
 An example is shown below:
 
@@ -61,6 +64,21 @@ An example is shown below:
         public function getIcon()
         {
             return 'foo.png'; // stored in module's image/ folder
+        }
+
+        public function getUserWidgetId()
+        {
+            return $this->userWidgetId;
+        }
+
+	public function getParameters()
+        {
+            return $this->parameters;
+        }
+
+        public function getDefWidget()
+        {
+            return $this->default;
         }
     }
 

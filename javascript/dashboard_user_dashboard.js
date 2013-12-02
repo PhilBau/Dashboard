@@ -24,3 +24,17 @@ function dashboard_add_widgets_onclick(state)
     });
 }
 
+function dashboard_update_parameters(state)
+{
+    var pars = { 'state': state };
+    new Zikula.Ajax.Request("ajax.php?module=Dashboard&type=ajax&func=updateParameters", {
+        parameters: pars,
+        onComplete: function (req) {
+           if (!req.isSuccess()) {
+               Zikula.showajaxerror(req.getMessage());
+               return;
+            }
+            return;
+       }
+    });
+}
