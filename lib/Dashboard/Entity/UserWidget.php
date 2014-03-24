@@ -59,9 +59,11 @@ class Dashboard_Entity_UserWidget
     private $class;
 
     /**
-     * @var string $parameters
+     * User widgets settings array
      *
-     * @ORM\Column(name="parameters", type="string", length=500)
+     * @var array $parameters
+     *
+     * @ORM\Column(type="array")
      */
     private $parameters;
 
@@ -182,13 +184,15 @@ class Dashboard_Entity_UserWidget
     /**
      * Set class
      *
-     * @param string $parameters
+     * @param array $parameters
      *
      * @return Dashboard_Entity_UserWidget
      */
-    public function setParameters($parameters)
+    public function setParameters($parameters = Array())
     {
-        $this->parameters = $parameters;
+        if ($parameters != $this->parameters) {
+            $this->parameters = $parameters;
+        }
 
         return $this;
     }
@@ -197,7 +201,7 @@ class Dashboard_Entity_UserWidget
      *
      * Get parameters
      *
-     * @return string
+     * @return array 
      */
     public function getParameters()
     {			

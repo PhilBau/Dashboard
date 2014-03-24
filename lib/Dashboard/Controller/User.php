@@ -34,7 +34,7 @@ class Dashboard_Controller_User extends Zikula_AbstractController
 
         $widgetId = $this->request->request->get('id', null);
         if (null === $widgetId) {
-            throw new Exception($this->__(sprintf('%s not found', $widgetId)));
+            throw new \InvalidArgumentException($this->__(sprintf('%s not found', $widgetId)));
         }
 
         $widget = $this->entityManager->getRepository('Dashboard_Entity_Widget')
@@ -57,7 +57,7 @@ class Dashboard_Controller_User extends Zikula_AbstractController
         if (isset($_POST['set_default_widget'])) {
             $defWidget = $this->request->getPost()->get('set_default_widget', null);
             if (null === $defWidget) {
-                throw new Exception($this->__(sprintf('%s not found', $defWidget)));
+                throw new \InvalidArgumentException($this->__(sprintf('%s not found', $defWidget)));
             }
 
             $widget->setDefWidget(1);
@@ -81,7 +81,7 @@ class Dashboard_Controller_User extends Zikula_AbstractController
 
         $id = $this->request->request->get('id', null);
         if (null === $id) {
-            throw new Exception($this->__('id not specified'));
+            throw new \InvalidArgumentException($this->__('id not specified'));
         }
 
         Dashboard_Util::removeUserWidget($id);
@@ -97,47 +97,39 @@ class Dashboard_Controller_User extends Zikula_AbstractController
             return LogUtil::registerPermissionError();
         }
 
+        // Get return page
+        $returnPage = urldecode($this->request->request->get('returnpage', ModUtil::url('Dashboard', 'user', 'view')));
+
         $id = $this->request->request->get('id', null);
         if (null === $id) {
-            throw new Exception($this->__('id not specified'));
+            throw new \InvalidArgumentException($this->__('id not specified'));
         }
 
-        $index = 1;
-        $serialized = '{';
+        $index = '1';
+        $parameters = array();
+        $paramName = '';
 
         // Serialize the widget parameters
         while(true) {
-            $paramName = $this->request->request->get('param'.'name'.$index, null);
+            $paramName = $this->request->getPost()->get('paramname'.$index, null);
             if (null === $paramName) {
-                break;
+                break;    
             }
 
             // Get the parameters
             $param = $this->request->getPost()->get('param'.$index, null);
             if (null === $param) {
-                throw new Exception($this->__('param not specified'));
+                throw new \InvalidArgumentException($this->__('param not specified'));
             }
 
-            // the parameters can also be an array
-            if (is_array($param)) {
-                $param =  implode("|",$param);
-            } 
-
-            if ($index != 1) {
-                $serialized .= ', "';	
-            } else {
-                $serialized .= '"';
-            }
-	    
-            $serialized .= $paramName.'":"'.$param.'"';
+            $parameters[$paramName] = $param;
             ++$index;
         }
 
-        $serialized .= '}';
-
         $uid = $this->request->getSession()->get('uid');
-        Dashboard_Util::updateUserParameters($id, $serialized);
+        Dashboard_Util::updateUserParameters($id, $parameters);
 
-        return $this->redirect(ModUtil::url('Dashboard', 'user', 'view'));
+        return $this->redirect($returnPage);
     }
+
 }

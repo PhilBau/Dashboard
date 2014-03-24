@@ -52,9 +52,11 @@ class Dashboard_Entity_Widget
     private $class;
 
      /**
-      * @var string $parameters
+      * Default widget parameters
       *
-      * @ORM\Column(name="parameters", type="string", length=500)
+      * @var array $parameters
+      *
+      * @ORM\Column(type="array")
       */
      private $parameters;
 
@@ -152,13 +154,15 @@ class Dashboard_Entity_Widget
     /**
      * Set parameters
      *
-     * @param string $parameters
+     * @param array $parameters
      *
      * @return Dashboard_Entity_Widget
      */
-    public function setParameters($parameters)
+    public function setParameters($parameters = Array())
     {
-        $this->parameters = $parameters;
+        if ($parameters != $this->parameters) {
+            $this->parameters = $parameters;
+        }
 
         return $this;
     }
@@ -167,7 +171,7 @@ class Dashboard_Entity_Widget
      *
      * Get parameters
      *
-     * @return string
+     * @return array
      */
     public function getParameters()
     {			
